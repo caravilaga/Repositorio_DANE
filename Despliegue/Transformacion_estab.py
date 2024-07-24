@@ -8,8 +8,8 @@ import Funciones
 data_path = r"D:\DANE - Contrato\2024\Operativo Barrido\Data\Despliegue prueba\Establecimientos/"
 dicc_path = r"D:\DANE - Contrato\2024\Operativo Barrido\Data/"
 
-#df = pd.read_csv(data_path + "Intermedio/CENU_SIMULADO.csv")
-df = pd.read_csv(data_path + "Intermedio/CENU.csv")
+df = pd.read_csv(data_path + "Intermedio/CENU_SIMULADO.csv")
+# df = pd.read_csv(data_path + "Intermedio/CENU.csv")
 
 '''
 Importar diccionarios para las variables de:
@@ -52,6 +52,15 @@ dic_g12 = {3:"Industria",
            11:"Actividades de salud humana",
            12:"Actividades artísticas",
 }
+
+dic_regconta = {1: "Estado_PyG", 
+                2: "Libros_Operaciones", 
+                3: "Otro",  
+                4:"No_lleva_registros" } 
+
+
+dic_ubica = {1: "Establecimientos", 
+             3: "VCAE"} 
 
 var_estab = ['UID_ENCUESTA','ING_TOTAL','CYG','POTTOT','REMUNERACION_TOTAL','DPTO','CPAM','GRUPOS12','UBICA','IDRUT','CAMCOMER','REG_CONT','ANIOS_OPERACION','VA','C_V'] 
 
@@ -106,7 +115,7 @@ df['IDRUT'] = df['IDRUT'].map(dict(zip(rel_rut['IDRUT'], rel_rut['Codigo'])))
 # Cámara de comercio
 df['CAMCOMER'] = df['CAMCOMER'].map(dict(zip(rel_cam['CAMCOMER'], rel_cam['Codigo'])))
 df['CAMCOMER'] = df['CAMCOMER'].fillna(0)
-
+df.loc[df['CAMCOMER']==" ",'CAMCOMER'] = 0
 
 '''
 Selección de las variables
@@ -130,10 +139,23 @@ df_final = df_final[~(df_final['UID_ENCUESTA'].isin(id_ig))]
 
 
 '''
+Asignar labels
+'''
+
+df_final['DPTO'] = df_final['DPTO'].map(dic_depto)
+df_final['CPAM'] = df_final['CPAM'].map(dic_rut)
+df_final['IDRUT'] = df_final['IDRUT'].map(dic_rut)
+df_final['CAMCOMER'] = df_final['CAMCOMER'].map(dic_rut)
+df_final['GRUPOS12'] = df_final['GRUPOS12'].map(dic_g12)
+df_final['REG_CONT'] = df_final['REG_CONT'].map(dic_regconta)
+df_final['UBICA'] = df_final['UBICA'].map(dic_ubica)
+
+
+'''
 Exportar
 '''
-#df_final.to_csv(data_path + "Intermedio/CENU_SIMULADO_modelo.csv", index=False)
-#df_final.to_excel(data_path + "Intermedio/CENU_SIMULADO_modelo.xlsx", index=False)
+df_final.to_csv(data_path + "Intermedio/CENU_SIMULADO_modelo.csv", index=False)
+df_final.to_excel(data_path + "Intermedio/CENU_SIMULADO_modelo.xlsx", index=False)
 
-df_final.to_csv(data_path + "Intermedio/CENU_piloto_modelo.csv", index=False)
-df_final.to_excel(data_path + "Intermedio/CENU_piloto_modelo.xlsx", index=False)
+# df_final.to_csv(data_path + "Intermedio/CENU_piloto_modelo.csv", index=False)
+# df_final.to_excel(data_path + "Intermedio/CENU_piloto_modelo.xlsx", index=False)

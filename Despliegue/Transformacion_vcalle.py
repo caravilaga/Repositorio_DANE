@@ -27,7 +27,6 @@ rel_g12 = pd.read_excel(dicc_path + "Diccionario.xlsx", sheet_name="GRUPOS12")
 rel_sex = pd.read_excel(dicc_path + "Diccionario.xlsx", sheet_name="SEXO")
 rel_anio = pd.read_excel(dicc_path + "Diccionario.xlsx", sheet_name="ANOS_ESPACIO")
 
-
 dic_depto = {5:"Antioquia",8:"Atlántico",11:"Bogotá, D. C.",13:"Bolívar",15:"Boyacá",17:"Caldas",18:"Caquetá",
              19:"Cauca",20:"Cesar",23:"Córdoba",25:"Cundinamarca",27:"Chocó",41:"Huila",44:"La Guajira",47:"Magdalena",
              50:"Meta",52:"Nariño",54:"Norte De Santander",63:"Quindío",66:"Risaralda",68:"Santander",70:"Sucre",73:"Tolima",
@@ -48,6 +47,12 @@ dic_g12 = {3:"Industria",
            11:"Actividades de salud humana",
            12:"Actividades artísticas",
 }
+
+dic_ANOS_ESPACIO = {1: "[0-1)", 
+                    2: "[1-3)",
+                    3: "[3-5)",
+                    4: "[5-10)",
+                    5: "x>=10"} 
 
 var_mov = ['UID_ENCUESTA','VENTAS','POTTOT','CYG','COD_DPTO','CPAM','GRUPOS12','ANOS_ESPACIO','SEXO','VA','C_V'] 
 
@@ -111,6 +116,14 @@ df_final = df_final[df_final['COD_DPTO'].isin(depto_emicron)]
 id_ig = df_final['UID_ENCUESTA'][((df_final.isna()) | (df_final==99)).any(axis=1)]
 df_final = df_final[~(df_final['UID_ENCUESTA'].isin(id_ig))]
 
+'''
+Asignar labels
+'''
+df_final['COD_DPTO'] = df_final['COD_DPTO'].map(dic_depto)
+df_final['CPAM'] = df_final['CPAM'].map(dic_rut)
+df_final['GRUPOS12'] = df_final['GRUPOS12'].map(dic_g12)
+df_final['SEXO'] = df_final['SEXO'].map(dic_rut)
+df_final['ANOS_ESPACIO'] = df_final['SEXO'].map(dic_ANOS_ESPACIO)
 
 '''
 Exportar
