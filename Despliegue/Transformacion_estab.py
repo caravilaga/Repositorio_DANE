@@ -64,6 +64,7 @@ dic_ubica = {1: "Establecimientos",
 
 var_estab = ['UID_ENCUESTA','ING_TOTAL','CYG','POTTOT','REMUNERACION_TOTAL','DPTO','CPAM','GRUPOS12','UBICA','IDRUT','CAMCOMER','REG_CONT','ANIOS_OPERACION','VA','C_V'] 
 
+    
 '''
 Creación de variables
 '''

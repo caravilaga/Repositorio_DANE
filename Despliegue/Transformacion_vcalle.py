@@ -5,10 +5,13 @@ import pandas as pd
 import numpy as np
 import Funciones
 
+#data_path = r"D:\Despliegue\Proyecto HOP\Data\Vcalle/"
+#dicc_path = r"D:\Despliegue\Proyecto HOP\Data/"
+
 data_path = r"D:\DANE - Contrato\2024\Operativo Barrido\Data\Despliegue prueba\Vcalle/"
 dicc_path = r"D:\DANE - Contrato\2024\Operativo Barrido\Data/"
 
-df = pd.read_csv(data_path + "Crudo/DB_SIMULADA_VDC (2).csv", sep = ';')
+df = pd.read_csv(data_path + "01 - Crudo/DB_SIMULADA_VDC (2).csv", sep = ';')
 
 '''
 Importar diccionarios para las variables de:
@@ -54,7 +57,7 @@ dic_ANOS_ESPACIO = {1: "[0-1)",
                     4: "[5-10)",
                     5: "x>=10"} 
 
-var_mov = ['UID_ENCUESTA','VENTAS','POTTOT','CYG','COD_DPTO','CPAM','GRUPOS12','ANOS_ESPACIO','SEXO','VA','C_V'] 
+var_mov = ['UID_ENCUESTA','VENTAS','POTTOT','CYG','VA','C_V','COD_DPTO','CPAM','GRUPOS12','ANOS_ESPACIO','HOMBRE'] 
 
 '''
 Creación de variables
@@ -98,6 +101,8 @@ df['ANOS_ESPACIO'] = df['ANOS_ESPACIO'].map(dict(zip(rel_anio['ANOS_ESPACIO'], r
 
 # Sexo
 df['SEXO'] = df['SEXO'].map(dict(zip(rel_sex['SEXO'], rel_sex['Codigo'])))
+df.rename(columns = {'SEXO' : 'HOMBRE'}, inplace = True)
+
 
 '''
 Selección de las variables
@@ -122,11 +127,11 @@ Asignar labels
 df_final['COD_DPTO'] = df_final['COD_DPTO'].map(dic_depto)
 df_final['CPAM'] = df_final['CPAM'].map(dic_rut)
 df_final['GRUPOS12'] = df_final['GRUPOS12'].map(dic_g12)
-df_final['SEXO'] = df_final['SEXO'].map(dic_rut)
-df_final['ANOS_ESPACIO'] = df_final['SEXO'].map(dic_ANOS_ESPACIO)
+df_final['HOMBRE'] = df_final['HOMBRE'].map(dic_rut)
+df_final['ANOS_ESPACIO'] = df_final['ANOS_ESPACIO'].map(dic_ANOS_ESPACIO)
 
 '''
 Exportar
 '''
-df_final.to_csv(data_path + "Intermedio/CENU_SIMULADO_modelo.csv", index=False)
-df_final.to_excel(data_path + "Intermedio/CENU_SIMULADO_modelo.xlsx", index=False)
+df_final.to_csv(data_path + "02 - Intermedio/CENU_SIMULADO_modelo.csv", index=False)
+df_final.to_excel(data_path + "02 - Intermedio/CENU_SIMULADO_modelo.xlsx", index=False)
