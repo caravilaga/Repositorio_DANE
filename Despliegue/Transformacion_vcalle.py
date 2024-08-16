@@ -73,7 +73,7 @@ df['TRABAJPAGO'] = pd.to_numeric(df['TRABAJPAGO'], errors= 'coerce')
 df['TRABAJFAMI'] = pd.to_numeric(df['TRABAJFAMI'], errors= 'coerce')
 
 df['POTTOT'] = df[['TRABAJSOC','TRABAJPAGO','TRABAJFAMI']].sum(axis=1)
-df.loc[(df['TRABAJSOC'].isna()) & (df['TRABAJPAGO'].isna()) & (df['TRABAJFAMI'].isna()), 'CYG'] = np.nan
+df.loc[(df['TRABAJSOC'].isna()) & (df['TRABAJPAGO'].isna()) & (df['TRABAJFAMI'].isna()), 'POTTOT'] = np.nan
 
 # Ciudad Principal y Área Metropolitana
 cpam = [11001,	5001,	5079,	5088,	5129,	5212,	5266,	5308,	5360,	5380,	5631,	76001,	76892,	8001,
