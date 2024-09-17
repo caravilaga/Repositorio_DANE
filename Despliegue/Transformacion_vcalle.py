@@ -87,6 +87,31 @@ df['CPAM'] = (df['COD_MPIO'].isin(cpam) & df['CLASE']==1).apply(lambda x: int(x)
 df['Division'] = df['CIIU_4'].apply(Funciones.extract_first_two_digits)
 df = pd.merge(df,rel_g12,on='Division',how="left")
 
+## Versión 2.0
+df['Division'] = None
+
+# Creación de la variable a partir de las respuestas del formulario
+df.loc[df['ACTIVIDAD'] == 1, 'Division'] = 47
+df.loc[df['SERVICIO'] == 1, 'Division'] = 56
+df.loc[df['SERVICIO'] == 2, 'Division'] = 38
+df.loc[df['SERVICIO'] == 3, 'Division'] = 92
+df.loc[df['SERVICIO'] == 4, 'Division'] = 45
+df.loc[df['SERVICIO'] == 5, 'Division'] = 95
+df.loc[df['SERVICIO'] == 6, 'Division'] = 96
+df.loc[df['PRODUCTO'].isin([1,2,3]) , 'Division'] = 32
+df.loc[df['PRODUCTO'] == 4 , 'Division'] = 15
+
+
+
+df.loc[df['dpto'] == '88', 'Division'] = 3
+df.loc[df['dpto'] == '76', 'Division'] = 4
+df.loc[df['dpto'].isin(['08', '13', '20', '23', '44', '47', '70']), 'Division'] = 5
+df.loc[df['dpto'].isin(['15', '25', '50', '54', '68']), 'Division'] = 6
+df.loc[df['dpto'].isin(['17', '18', '41', '63', '66', '73']), 'Division'] = 7
+df.loc[df['dpto'].isin(['19', '27', '52']), 'Division'] = 8
+df.loc[df['dpto'].isin(['91', '81', '85', '94', '95', '86', '97', '99']), 'Division'] = 9
+
+
 # Valor Agregado
 df['VA'] = df['VENTAS'] - df['CYG']
 
@@ -129,6 +154,7 @@ df_final['CPAM'] = df_final['CPAM'].map(dic_rut)
 df_final['GRUPOS12'] = df_final['GRUPOS12'].map(dic_g12)
 df_final['HOMBRE'] = df_final['HOMBRE'].map(dic_rut)
 df_final['ANOS_ESPACIO'] = df_final['ANOS_ESPACIO'].map(dic_ANOS_ESPACIO)
+
 
 '''
 Exportar
