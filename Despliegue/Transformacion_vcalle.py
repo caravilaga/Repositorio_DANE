@@ -101,15 +101,17 @@ df['GRUPOS12'] = None
 # df.loc[df['PRODUCTO'].isin([1,2,3]) , 'Division'] = 32
 # df.loc[df['PRODUCTO'] == 4 , 'Division'] = 15
 
+# Actividad de comercio
 df.loc[df['ACTIVIDAD'] == 1, 'GRUPOS12'] = 5
-df.loc[df['SERVICIO'] == 1, 'GRUPOS12'] = 7
-df.loc[df['SERVICIO'] == 2, 'GRUPOS12'] = 3
-df.loc[df['SERVICIO'] == 3, 'GRUPOS12'] = 12
-df.loc[df['SERVICIO'] == 4, 'GRUPOS12'] = 5
-df.loc[df['SERVICIO'] == 5, 'GRUPOS12'] = 12
-df.loc[df['SERVICIO'] == 6, 'GRUPOS12'] = 12
-df.loc[df['PRODUCTO'].isin([1,2,3]) , 'GRUPOS12'] = 3
-df.loc[df['PRODUCTO'] == 4 , 'GRUPOS12'] = 3
+
+# Actividad de servicios
+df.loc[(df['ACTIVIDAD'] == 2) & (df['SERVICIO'] == 1), 'GRUPOS12'] = 7
+df.loc[(df['ACTIVIDAD'] == 2) & (df['SERVICIO'] == 2), 'GRUPOS12'] = 3
+df.loc[(df['ACTIVIDAD'] == 2) & (df['SERVICIO'].isin([3,5,6,7])), 'GRUPOS12'] = 12
+df.loc[(df['ACTIVIDAD'] == 2) & (df['SERVICIO'] == 4), 'GRUPOS12'] = 5
+
+# Actividad de industria
+df.loc[(df['ACTIVIDAD'] == 3) & (df['PRODUCTO'].isin([1,2,3,4,5])) , 'GRUPOS12'] = 3
 
 
 # Valor Agregado
